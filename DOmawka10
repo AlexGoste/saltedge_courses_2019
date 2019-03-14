@@ -1,0 +1,12 @@
+require "json"
+
+json = File.read("list.json")
+list = JSON.parse(json)
+
+def list(hsh)
+	fname = hsh.keys
+	lname = hsh.values
+	fname.product(lname).map { |i| i.join (" ") }
+end
+
+puts list(list)
