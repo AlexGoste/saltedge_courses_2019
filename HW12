@@ -1,0 +1,15 @@
+require 'pry'
+require 'rest-client'
+require 'nokogiri'
+
+html=RestClient.get('https://point.md/ru').body
+parsed=Nokogiri::HTML.parse(html)
+
+image_tags=parsed.css('div#post-list-container img').take(10)	
+
+image_tags.each do |img|
+	url = "#{img['src']}"
+	name = url.split("/").last
+	file=RestClient.get(url).body 
+    File.write(name, file, mode: "wb")
+end
